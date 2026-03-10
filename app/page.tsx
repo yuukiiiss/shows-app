@@ -1,4 +1,5 @@
 import { getTrendingMovies } from "@/lib/tmdb"
+import MovieCard from "@/components/MovieCard"
 
 export default async function Home() {
   const movies = await getTrendingMovies()
@@ -9,10 +10,7 @@ export default async function Home() {
 
       <div className="grid grid-cols-4 gap-4">
         {movies.map((movie: any) => (
-          <div key={movie.id} className="border p-4 rounded">
-            <h2 className="font-semibold">{movie.title}</h2>
-            <p>⭐ {movie.vote_average}</p>
-          </div>
+          <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
     </main>
