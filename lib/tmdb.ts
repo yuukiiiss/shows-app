@@ -32,23 +32,30 @@ export async function getTrendingMovies() {
 }
 
 export async function getMovieDetail(id: string) {
-  const data = await fetchFromTMDB(
-    `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
-  )
+  try {
+    const res = await fetch(
+      `${BASE_URL}/movie/${id}?api_key=${API_KEY}`,
+      { cache: "no-store" }
+    )
 
-  return data
+    if (!res.ok) {
+      return null
+    }
+
+    const data = await res.json()
+    return data
+  } catch (error) {
+    console.error("Detail fetch error:", error)
+    return null
+  }
 }
 
 export async function discoverMovies(genre?: string, query?: string) {
   let url = `${BASE_URL}/discover/movie?api_key=${API_KEY}`
 
-  if (genre) {
-    url += `&with_genres=${genre}`
-  }
-
-  if (query) {
+  if (genre) url += `&with_genres=${genre}`
+  if (query)
     url = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}`
-  }
 
   const data = await fetchFromTMDB(url)
 
