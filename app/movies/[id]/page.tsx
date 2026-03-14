@@ -5,6 +5,7 @@ import type { Metadata } from "next"
 import { getMovieDetail } from "@/lib/tmdb"
 import FavoriteButton from "@/components/FavoriteButton"
 
+import GenreBadge from "@/components/GenreBadge"
 export async function generateMetadata({
   params,
 }: {
@@ -73,6 +74,12 @@ export default async function MovieDetailPage({
           <p className="mb-2 text-lg">
             ⭐ {movie.vote_average?.toFixed(1) ?? "N/A"}
           </p>
+
+          <div className="mb-4">
+            {movie.genres?.map((g: any) => (
+              <GenreBadge key={g.id} name={g.name} />
+            ))}
+          </div>
 
           <p className="text-gray-600 max-w-xl">
             {movie.overview}
