@@ -1,6 +1,18 @@
 const API_KEY = process.env.TMDB_API_KEY
 const BASE_URL = "https://api.themoviedb.org/3"
 
+const FALLBACK_GENRES = [
+  { id: 28, name: "Action" },
+  { id: 12, name: "Adventure" },
+  { id: 16, name: "Animation" },
+  { id: 35, name: "Comedy" },
+  { id: 80, name: "Crime" },
+  { id: 18, name: "Drama" },
+  { id: 27, name: "Horror" },
+  { id: 10749, name: "Romance" },
+  { id: 878, name: "Science Fiction" },
+]
+
 export async function getTrendingMovies() {
   try {
     const res = await fetch(
@@ -58,9 +70,17 @@ export async function getGenres() {
     )
 
     const data = await res.json()
-    return data.genres || []
+
+    // ⭐ jika API return kosong → pakai fallback
+    if (!data.genres || data.genres.length === 0) {
+      return FALLBACK_GENRES
+    }
+
+    return data.genres
   } catch (error) {
     console.error("Genre fetch error:", error)
-    return []
+
+    // ⭐ offline / fetch gagal → pakai fallback
+    return FALLBACK_GENRES
   }
 }

@@ -21,11 +21,24 @@ export default async function MoviesPage({
 
       <GenreFilter genres={genres} />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {movies.map((movie: any) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-      </div>
+      {/* ✅ EMPTY STATE */}
+      {movies.length === 0 ? (
+        <div className="mt-10 text-center">
+          <p className="text-gray-500 text-lg">
+            No movies found.
+          </p>
+
+          <p className="text-gray-400 mt-2">
+            Try another keyword, genre, or check your connection.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {movies.map((movie: any) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </div>
+      )}
     </main>
   )
 }
