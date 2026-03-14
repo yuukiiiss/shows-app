@@ -1,26 +1,31 @@
 "use client"
 
-import { useRouter } from "next/navigation"
-
 export default function MoviesError() {
-  const router = useRouter()
-
   return (
     <main className="p-8 text-center">
       <h1 className="text-2xl font-bold mb-4">
-        Something went wrong.
+        Failed to load movies
       </h1>
 
       <p className="text-gray-600 mb-6">
-        Please check your connection or try again later.
+        Something went wrong or connection is lost.
       </p>
 
-      <button
-        onClick={() => router.push("/movies")}
-        className="border px-4 py-2 rounded hover:bg-gray-100 transition"
-      >
-        Back to Movies
-      </button>
+      <div className="flex justify-center gap-3">
+        <button
+          onClick={() => window.location.reload()}
+          className="border px-4 py-2 rounded hover:bg-gray-100"
+        >
+          Try again
+        </button>
+
+        <a
+          href="/"
+          className="border px-4 py-2 rounded hover:bg-gray-100"
+        >
+          Back to Home
+        </a>
+      </div>
     </main>
   )
 }
