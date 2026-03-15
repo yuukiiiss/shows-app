@@ -1,34 +1,43 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 
 export default function MovieFilter() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const initialQuery = searchParams.get("q") || ""
+  const queryFromUrl = searchParams.get("q") || ""
 
-  const [value, setValue] = useState(initialQuery)
-  const [debounced, setDebounced] = useState(initialQuery)
+  const [value, setValue] = useState(queryFromUrl)
+  const [debounced, setDebounced] = useState(queryFromUrl)
 
-  // debounce
+  const typingRef = useRef(false)
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    setValue(queryFromUrl)
+    setDebounced(queryFromUrl)
+    typingRef.current = false
+  }, [queryFromUrl])
+
+  useEffect(() => {
+    typingRef.current = true
+
+    const t = setTimeout(() => {
       setDebounced(value)
     }, 500)
 
-    return () => clearTimeout(timer)
+    return () => clearTimeout(t)
   }, [value])
 
-  // push only if query berubah
   useEffect(() => {
-    const genre = searchParams.get("genre")
+    if (!typingRef.current) return
 
     const params = new URLSearchParams()
 
-    if (debounced) params.set("q", debounced)
-    if (genre) params.set("genre", genre)
+    if (debounced) {
+      params.set("q", debounced)
+    }
 
     router.push(`/movies?${params.toString()}`)
   }, [debounced])
