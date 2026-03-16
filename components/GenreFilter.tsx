@@ -30,21 +30,27 @@ export default function GenreFilter({
         value={selectedGenre}
         onChange={handleChange}
         className="
-          w-full
-          h-11
-          pl-4 pr-12
-          rounded-xl
-          border border-gray-300 dark:border-gray-700
-          bg-white dark:bg-gray-900
-          text-sm
-          transition
-          hover:border-gray-400 dark:hover:border-gray-500
-          hover:bg-gray-50 dark:hover:bg-gray-800
-          focus:outline-none
-          focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700
-          appearance-none
-          cursor-pointer
-        "
+            w-full
+            h-11
+            pl-4 pr-12
+            rounded-xl
+            border border-gray-300 dark:border-gray-700
+            bg-white dark:bg-gray-900
+            text-sm
+            appearance-none
+            cursor-pointer
+
+            transition-colors duration-200 ease-out
+
+            hover:border-gray-400
+            hover:bg-gray-100
+
+            dark:hover:border-gray-600
+            dark:hover:bg-gray-800
+
+            focus:outline-none
+            focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700
+          "
       >
         <option value="">All Genres</option>
 
