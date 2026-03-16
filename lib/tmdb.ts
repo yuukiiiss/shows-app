@@ -13,14 +13,32 @@ const FALLBACK_GENRES = [
   { id: 878, name: "Science Fiction" },
 ]
 
+// ⭐ ultra safe fetch
 async function fetchFromTMDB(url: string) {
-  const res = await fetch(url, { cache: "no-store" })
+  try {
+    const controller = new AbortController()
 
-  if (!res.ok) {
-    throw new Error("TMDB request failed")
+    const timeout = setTimeout(() => {
+      controller.abort()
+    }, 8000)
+
+    const res = await fetch(url, {
+      cache: "no-store",
+      signal: controller.signal,
+    })
+
+    clearTimeout(timeout)
+
+    if (!res.ok) {
+      console.error("TMDB status error:", res.status)
+      return null
+    }
+
+    return await res.json()
+  } catch (err) {
+    console.error("TMDB fetch error:", err)
+    return null
   }
-
-  return res.json()
 }
 
 export async function getTrendingMovies() {
@@ -28,26 +46,15 @@ export async function getTrendingMovies() {
     `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`
   )
 
-  return data.results || []
+  return data?.results || []
 }
 
 export async function getMovieDetail(id: string) {
-  try {
-    const res = await fetch(
-      `${BASE_URL}/movie/${id}?api_key=${API_KEY}`,
-      { cache: "no-store" }
-    )
+  const data = await fetchFromTMDB(
+    `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
+  )
 
-    if (!res.ok) {
-      return null
-    }
-
-    const data = await res.json()
-    return data
-  } catch (error) {
-    console.error("Detail fetch error:", error)
-    return null
-  }
+  return data || null
 }
 
 export async function discoverMovies(genre?: string, query?: string) {
@@ -59,21 +66,17 @@ export async function discoverMovies(genre?: string, query?: string) {
 
   const data = await fetchFromTMDB(url)
 
-  return data.results || []
+  return data?.results || []
 }
 
 export async function getGenres() {
-  try {
-    const data = await fetchFromTMDB(
-      `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
-    )
+  const data = await fetchFromTMDB(
+    `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
+  )
 
-    if (!data.genres || data.genres.length === 0) {
-      return FALLBACK_GENRES
-    }
-
-    return data.genres
-  } catch {
+  if (!data?.genres || data.genres.length === 0) {
     return FALLBACK_GENRES
   }
+
+  return data.genres
 }
