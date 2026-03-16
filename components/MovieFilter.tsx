@@ -1,50 +1,54 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 
 export default function MovieFilter() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
   const queryFromUrl = searchParams.get("q") || ""
+  const genre = searchParams.get("genre") || ""
 
   const [value, setValue] = useState(queryFromUrl)
   const [debounced, setDebounced] = useState(queryFromUrl)
 
-  const typingRef = useRef(false)
-
   useEffect(() => {
     setValue(queryFromUrl)
     setDebounced(queryFromUrl)
-    typingRef.current = false
   }, [queryFromUrl])
 
   useEffect(() => {
-    typingRef.current = true
-
     const t = setTimeout(() => {
       setDebounced(value)
-    }, 500)
+    }, 600)
 
     return () => clearTimeout(t)
   }, [value])
 
   useEffect(() => {
-    if (!typingRef.current) return
-
     const params = new URLSearchParams()
 
-    if (debounced) {
-      params.set("q", debounced)
-    }
+    if (debounced.trim()) params.set("q", debounced)
+    if (genre) params.set("genre", genre)
 
     router.push(`/movies?${params.toString()}`)
   }, [debounced])
 
   return (
     <input
-      className="border p-2 mb-6 w-full"
+      className="
+        w-full
+        h-11
+        px-4
+        rounded-xl
+        border border-gray-300 dark:border-gray-700
+        bg-white dark:bg-gray-900
+        text-sm
+        focus:outline-none
+        focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700
+        transition
+      "
       placeholder="Search movie..."
       value={value}
       onChange={(e) => setValue(e.target.value)}
