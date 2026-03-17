@@ -1,27 +1,40 @@
-import { discoverMovies, getGenres } from "@/lib/tmdb";
-import MovieCard from "@/components/MovieCard";
-import MovieFilter from "@/components/MovieFilter";
-import GenreFilter from "@/components/GenreFilter";
-import FilterBar from "@/components/FilterBar";
-import Link from "next/link";
-import type { Metadata } from "next";
+import {
+  discoverMovies,
+  getGenres,
+  getTrendingMedia,
+  searchMedia,
+} from "@/lib/tmdb"
+import MovieCard from "@/components/MovieCard"
+import MovieFilter from "@/components/MovieFilter"
+import GenreFilter from "@/components/GenreFilter"
+import FilterBar from "@/components/FilterBar"
+import Link from "next/link"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "All Movies",
   description: "Browse and search movies",
-};
+}
 
 export default async function MoviesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; genre?: string }>;
+  searchParams: Promise<{ q?: string; genre?: string }>
 }) {
-  const { q, genre } = await searchParams;
+  const { q, genre } = await searchParams
 
-  const movies = await discoverMovies(genre, q);
-  const genres = await getGenres();
+  let movies: any[] = []
 
-  const selectedGenre = genres.find((g) => String(g.id) === genre);
+  if (q) {
+    movies = await searchMedia(q)
+  } else if (genre) {
+    movies = await discoverMovies(genre)
+  } else {
+    movies = await getTrendingMedia()
+  }
+
+  const genres = await getGenres()
+  const selectedGenre = genres.find((g) => String(g.id) === genre)
 
   return (
     <main className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-10">
@@ -130,7 +143,9 @@ export default async function MoviesPage({
         <div className="mt-24 flex flex-col items-center text-center max-w-md mx-auto">
           <div className="text-6xl mb-6">🍿</div>
 
-          <h2 className="text-xl font-semibold mb-2">No results found</h2>
+          <h2 className="text-xl font-semibold mb-2">
+            No results found
+          </h2>
 
           <p className="text-gray-500 leading-relaxed mb-6">
             Try searching with a different keyword or explore another genre.
@@ -146,10 +161,10 @@ export default async function MoviesPage({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {movies.map((movie: any) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <MovieCard key={`${movie.media_type}-${movie.id}`} movie={movie} />
           ))}
         </div>
       )}
     </main>
-  );
+  )
 }
