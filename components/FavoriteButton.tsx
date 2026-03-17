@@ -39,7 +39,7 @@ export default function FavoriteButton({ movie }: { movie: Movie }) {
     setOpen(false)
   }
 
-  function closeModal(e: React.MouseEvent) {
+  function close(e: React.MouseEvent) {
     e.preventDefault()
     e.stopPropagation()
     setOpen(false)
@@ -49,30 +49,24 @@ export default function FavoriteButton({ movie }: { movie: Movie }) {
     <>
       <button
         onClick={handleClick}
-        className="
-          p-1.5
-          transition
-          hover:opacity-70
-          active:scale-95
-        "
+        className="p-1.5 transition hover:scale-110 active:scale-95"
         aria-label="Toggle favorite"
       >
         <svg
           viewBox="0 0 24 24"
           className={`
-            w-5 h-5
-            transition
+            w-5 h-5 transition-all duration-200
             ${
               favorite
-                ? "fill-slate-600 dark:fill-slate-300 stroke-slate-600 dark:stroke-slate-300"
-                : "fill-transparent stroke-gray-700 dark:stroke-gray-300"
+                ? "fill-rose-500 stroke-rose-500"
+                : "fill-transparent stroke-gray-600 dark:stroke-gray-300 hover:stroke-rose-400"
             }
           `}
           strokeWidth="1.8"
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="M6 3h12v18l-6-4-6 4z" />
+          <path d="M12.1 21s-7.1-4.4-9.2-8.6C1.4 8.6 3.3 4 7.6 5.1c1.7.4 2.8 1.7 4.5 3.6 1.7-1.9 2.8-3.2 4.5-3.6C20.9 4 22.8 8.6 21.3 12.4 19.2 16.6 12.1 21 12.1 21z" />
         </svg>
       </button>
 
@@ -85,30 +79,40 @@ export default function FavoriteButton({ movie }: { movie: Movie }) {
               flex items-center justify-center
               bg-black/40 backdrop-blur-sm
             "
-            onClick={closeModal}
+            onClick={close}
           >
             <div
               className="
                 bg-white dark:bg-gray-900
-                rounded-2xl
-                px-7 py-6
+                rounded-3xl
+                px-8 py-7
                 shadow-2xl
-                w-[340px]
+                w-[360px]
                 text-center
+                animate-[fadeIn_.18s_ease]
               "
               onClick={(e) => e.stopPropagation()}
             >
-              <p className="text-sm mb-6">
+              <svg
+                viewBox="0 0 24 24"
+                className="w-9 h-9 mx-auto mb-4 fill-rose-500"
+              >
+                <path d="M12.1 21s-7.1-4.4-9.2-8.6C1.4 8.6 3.3 4 7.6 5.1c1.7.4 2.8 1.7 4.5 3.6 1.7-1.9 2.8-3.2 4.5-3.6C20.9 4 22.8 8.6 21.3 12.4 19.2 16.6 12.1 21 12.1 21z" />
+              </svg>
+
+              <h3 className="font-semibold mb-2">
                 Remove from favorites?
+              </h3>
+
+              <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+                You can always add it again later.
               </p>
 
               <div className="flex justify-center gap-3">
                 <button
-                  onClick={closeModal}
+                  onClick={close}
                   className="
-                    px-4 py-2
-                    rounded-lg
-                    text-sm
+                    px-4 py-2 rounded-lg text-sm
                     bg-gray-100 dark:bg-gray-800
                     hover:bg-gray-200 dark:hover:bg-gray-700
                     transition
@@ -120,11 +124,10 @@ export default function FavoriteButton({ movie }: { movie: Movie }) {
                 <button
                   onClick={confirmRemove}
                   className="
-                    px-4 py-2
-                    rounded-lg
-                    text-sm
-                    bg-slate-700 text-white
-                    hover:bg-slate-800
+                    px-4 py-2 rounded-lg text-sm
+                    border border-rose-400
+                    text-rose-500
+                    hover:bg-rose-500 hover:text-white
                     transition
                   "
                 >
