@@ -6,6 +6,23 @@ import { getMovieDetail } from "@/lib/tmdb"
 import FavoriteButton from "@/components/FavoriteButton"
 import GenreBadge from "@/components/GenreBadge"
 
+type Genre = {
+  id: number
+  name: string
+}
+
+type MovieDetail = {
+  id: number
+  title: string
+  overview?: string
+  vote_average?: number
+  poster_path?: string | null
+  backdrop_path?: string | null
+  runtime?: number
+  release_date?: string
+  genres?: Genre[]
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -13,7 +30,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   try {
     const { id } = await params
-    const movie = await getMovieDetail(id)
+    const movie: MovieDetail | null = await getMovieDetail(id)
 
     if (!movie) {
       return {
@@ -52,7 +69,7 @@ export default async function MovieDetailPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
-  const movie = await getMovieDetail(id)
+  const movie: MovieDetail | null = await getMovieDetail(id)
 
   if (!movie) notFound()
 
@@ -61,66 +78,72 @@ export default async function MovieDetailPage({
   const runtime = formatRuntime(movie.runtime)
 
   return (
-    <main className="pt-14 pb-16">
-      <div className="grid md:grid-cols-[440px_1fr] lg:grid-cols-[520px_1fr] gap-16 items-start">
+    <main className="pt-10 md:pt-14 pb-14 md:pb-16">
+      <div className="grid md:grid-cols-[440px_1fr] lg:grid-cols-[520px_1fr] gap-8 md:gap-16 items-start">
 
-        <div className="relative w-full max-w-[520px] md:-mt-10">
+        {/* Poster */}
+        <div className="relative w-full md:max-w-[520px] md:-mt-10">
           {imagePath && (
             <Image
               src={`https://image.tmdb.org/t/p/w500${imagePath}`}
               alt={movie.title || "Movie image"}
               width={520}
               height={780}
-              className="rounded-2xl"
+              className="rounded-2xl w-full h-auto"
             />
           )}
 
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-3 right-3 md:top-4 md:right-4">
             <FavoriteButton movie={movie} />
           </div>
         </div>
 
-        <div className="flex flex-col">
-          <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-tight">
+        {/* Content */}
+        <div className="flex flex-col mt-4 md:mt-0">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-tight">
             {movie.title}
           </h1>
 
           {(year || runtime) && (
-            <div className="mt-1.5 text-[15px] text-gray-600 dark:text-gray-300 flex items-center gap-2">
+            <div className="mt-1.5 text-sm md:text-[15px] text-gray-600 dark:text-gray-300 flex items-center gap-2">
               {year && <span>{year}</span>}
               {year && runtime && <span>•</span>}
               {runtime && <span>{runtime}</span>}
             </div>
           )}
 
-          <div className="flex items-center gap-2 mt-2 text-[15px] text-gray-700 dark:text-gray-300">
+          <div className="flex items-center gap-2 mt-2 text-sm md:text-[15px] text-gray-700 dark:text-gray-300">
             <span className="text-amber-400 text-base">★</span>
             <span>{movie.vote_average?.toFixed(1) ?? "N/A"}</span>
           </div>
 
-          <div className="mt-7">
-            <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
-              Genres
-            </p>
+          {movie.genres && movie.genres.length > 0 && (
+            <div className="mt-6 md:mt-7">
+              <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
+                Genres
+              </p>
 
-            <div className="flex flex-wrap gap-2">
-              {movie.genres?.map((g: any) => (
-                <GenreBadge key={g.id} name={g.name} />
-              ))}
+              <div className="flex flex-wrap gap-2">
+                {movie.genres.map((g) => (
+                  <GenreBadge key={g.id} name={g.name} />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          <div className="mt-9 max-w-2xl">
-            <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
-              Overview
-            </p>
+          {movie.overview && (
+            <div className="mt-7 md:mt-9 max-w-2xl">
+              <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
+                Overview
+              </p>
 
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-[15px]">
-              {movie.overview}
-            </p>
-          </div>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm md:text-[15px]">
+                {movie.overview}
+              </p>
+            </div>
+          )}
+
         </div>
-
       </div>
     </main>
   )
