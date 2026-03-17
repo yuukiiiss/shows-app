@@ -1,16 +1,36 @@
-export default function LoadingMovies() {
-    return (
-      <main className="p-8">
-        <h1 className="text-3xl font-bold mb-6">Loading movies...</h1>
-  
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-[350px] bg-gray-200 animate-pulse rounded"
-            />
-          ))}
+export default function Loading() {
+  return (
+    <main className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-10">
+
+      <div className="mb-6">
+        <div className="h-10 w-64 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+        <div className="h-4 w-80 bg-gray-200 dark:bg-gray-800 rounded mt-2 animate-pulse" />
+      </div>
+
+      <div className="mb-8">
+        <div className="flex flex-col md:flex-row gap-3">
+          <div className="h-11 flex-1 bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse" />
+          <div className="h-11 md:w-56 bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse" />
         </div>
-      </main>
-    )
-  }
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {Array.from({ length: 12 }).map((_, i) => (
+          <div
+            key={i}
+            className="rounded-xl overflow-hidden bg-white dark:bg-gray-900 shadow-md flex flex-col"
+          >
+            <div className="w-full aspect-[2/3] bg-gray-200 dark:bg-gray-800 animate-pulse" />
+
+            <div className="px-4 pt-3 pb-4 flex flex-col gap-2">
+              <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+              <div className="h-4 w-1/2 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
+              <div className="h-3 w-16 bg-gray-200 dark:bg-gray-800 rounded mt-1 animate-pulse" />
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </main>
+  )
+}
