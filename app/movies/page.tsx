@@ -1,27 +1,27 @@
-import { discoverMovies, getGenres } from "@/lib/tmdb";
-import MovieCard from "@/components/MovieCard";
-import MovieFilter from "@/components/MovieFilter";
-import GenreFilter from "@/components/GenreFilter";
-import FilterBar from "@/components/FilterBar";
-import Link from "next/link";
-import type { Metadata } from "next";
+import { discoverMovies, getGenres } from "@/lib/tmdb"
+import MovieCard from "@/components/MovieCard"
+import MovieFilter from "@/components/MovieFilter"
+import GenreFilter from "@/components/GenreFilter"
+import FilterBar from "@/components/FilterBar"
+import Link from "next/link"
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "All Movies",
   description: "Browse and search movies",
-};
+}
 
 export default async function MoviesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; genre?: string }>;
+  searchParams: Promise<{ q?: string; genre?: string }>
 }) {
-  const { q, genre } = await searchParams;
+  const { q, genre } = await searchParams
 
-  const movies = await discoverMovies(genre, q);
-  const genres = await getGenres();
+  const movies = await discoverMovies(genre, q)
+  const genres = await getGenres()
 
-  const selectedGenre = genres.find((g) => String(g.id) === genre);
+  const selectedGenre = genres.find((g) => String(g.id) === genre)
 
   return (
     <main className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-10">
@@ -44,10 +44,11 @@ export default async function MoviesPage({
               ← Back to explore
             </Link>
 
-            <h1 className="text-4xl font-semibold mt-3">Search result</h1>
+            <h1 className="text-4xl font-semibold mt-3">Search results</h1>
 
             <p className="text-gray-500 mt-1">
-              Showing results for <span className="font-medium">{q}</span>
+              Showing results for{" "}
+              <span className="font-medium">{q}</span>
             </p>
           </>
         )}
@@ -65,7 +66,9 @@ export default async function MoviesPage({
               {selectedGenre?.name}
             </h1>
 
-            <p className="text-gray-500 mt-1">Movies in this category</p>
+            <p className="text-gray-500 mt-1">
+              Movies in this category
+            </p>
           </>
         )}
       </div>
@@ -101,10 +104,25 @@ export default async function MoviesPage({
       </FilterBar>
 
       {movies.length === 0 ? (
-        <div className="mt-20 text-center">
-          <p className="text-lg text-gray-500">No movies found</p>
+        <div className="mt-24 flex flex-col items-center text-center max-w-md mx-auto">
 
-          <p className="text-gray-400 mt-2">Try another keyword or genre</p>
+          <div className="text-6xl mb-6">🍿</div>
+
+          <h2 className="text-xl font-semibold mb-2">
+            No results found
+          </h2>
+
+          <p className="text-gray-500 leading-relaxed mb-6">
+            Try searching with a different keyword or explore another genre.
+          </p>
+
+          <Link
+            href="/movies"
+            className="px-6 py-2.5 rounded-lg border border-gray-300 hover:bg-gray-100 transition font-medium"
+          >
+            Browse all movies
+          </Link>
+
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -114,5 +132,5 @@ export default async function MoviesPage({
         </div>
       )}
     </main>
-  );
+  )
 }
