@@ -39,21 +39,41 @@ export default function FavoritesPage() {
 
   if (favorites.length === 0) {
     return (
-      <main className="p-8 text-center">
-        <h1 className="text-3xl font-bold mb-4">
-          Favorite Movies
+      <main className="p-8 flex flex-col items-center text-center mt-20">
+  
+        <div className="mb-6 opacity-80">
+          <svg
+            viewBox="0 0 24 24"
+            className="w-16 h-16 stroke-gray-300 dark:stroke-gray-600 fill-none"
+            strokeWidth="1.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12.1 21s-7.1-4.4-9.2-8.6C1.4 8.6 3.3 4 7.6 5.1c1.7.4 2.8 1.7 4.5 3.6 1.7-1.9 2.8-3.2 4.5-3.6C20.9 4 22.8 8.6 21.3 12.4 19.2 16.6 12.1 21 12.1 21z" />
+          </svg>
+        </div>
+  
+        <h1 className="text-3xl font-semibold mb-2">
+          Your favorites list is empty
         </h1>
-
-        <p className="text-gray-600 mb-6">
-          No favorite movies yet. Browse movies and add some to your favorites.
+  
+        <p className="text-gray-500 max-w-md leading-relaxed mb-6">
+          Save movies or TV shows you like.
         </p>
-
+  
         <Link
           href="/movies"
-          className="inline-block border px-4 py-2 rounded hover:bg-gray-100 transition"
+          className="
+            px-5 py-2.5
+            rounded-lg
+            border border-gray-300
+            hover:bg-gray-100
+            transition font-medium
+          "
         >
-          Browse Movies
+          Explore shows
         </Link>
+  
       </main>
     )
   }
