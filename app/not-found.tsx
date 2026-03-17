@@ -2,19 +2,27 @@ import Link from "next/link"
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-8 text-center">
-      <h1 className="text-5xl font-bold mb-4">404</h1>
+    <main className="min-h-screen flex items-center justify-center px-6">
+      <div className="max-w-md w-full text-center">
 
-      <p className="text-gray-600 mb-6">
-        Movie not found or the page does not exist.
-      </p>
+        <div className="text-6xl mb-6">🍿</div>
 
-      <Link
-        href="/movies"
-        className="border px-4 py-2 rounded hover:bg-gray-100 transition"
-      >
-        Back to Movies
-      </Link>
+        <h1 className="text-2xl font-semibold mb-3">
+          Movie not found
+        </h1>
+
+        <p className="text-gray-500 mb-8 leading-relaxed">
+          The movie you’re looking for doesn’t exist or may have been removed.
+        </p>
+
+        <Link
+          href="/movies"
+          className="inline-block px-6 py-2.5 rounded-lg border border-gray-300 hover:bg-gray-100 transition font-medium"
+        >
+          Browse movies
+        </Link>
+
+      </div>
     </main>
   )
 }
