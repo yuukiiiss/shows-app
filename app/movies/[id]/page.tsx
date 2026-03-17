@@ -34,6 +34,18 @@ export async function generateMetadata({
   }
 }
 
+function formatRuntime(min?: number) {
+  if (!min) return null
+  const h = Math.floor(min / 60)
+  const m = min % 60
+  return `${h}h ${m}m`
+}
+
+function formatYear(date?: string) {
+  if (!date) return null
+  return date.slice(0, 4)
+}
+
 export default async function MovieDetailPage({
   params,
 }: {
@@ -45,13 +57,14 @@ export default async function MovieDetailPage({
   if (!movie) notFound()
 
   const imagePath = movie.poster_path || movie.backdrop_path
+  const year = formatYear(movie.release_date)
+  const runtime = formatRuntime(movie.runtime)
 
   return (
-    <main className="max-w-screen-xl mx-auto px-6 lg:px-10 pt-24 pb-16">
+    <main className="pt-14 pb-16">
       <div className="grid md:grid-cols-[440px_1fr] lg:grid-cols-[520px_1fr] gap-16 items-start">
 
-        {/* Poster */}
-        <div className="relative w-full max-w-[520px] md:-mt-20">
+        <div className="relative w-full max-w-[520px] md:-mt-10">
           {imagePath && (
             <Image
               src={`https://image.tmdb.org/t/p/w500${imagePath}`}
@@ -68,33 +81,46 @@ export default async function MovieDetailPage({
         </div>
 
         <div className="flex flex-col">
+          <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-tight">
+            {movie.title}
+          </h1>
 
-          <div className="mb-6">
-            <h1 className="text-4xl lg:text-5xl font-semibold tracking-tight leading-tight">
-              {movie.title}
-            </h1>
+          {(year || runtime) && (
+            <div className="mt-1.5 text-[15px] text-gray-600 dark:text-gray-300 flex items-center gap-2">
+              {year && <span>{year}</span>}
+              {year && runtime && <span>•</span>}
+              {runtime && <span>{runtime}</span>}
+            </div>
+          )}
 
-            <div className="flex items-center gap-2 mt-1.5 text-[15px] text-gray-700 dark:text-gray-300">
-              <span className="text-amber-400 text-base">★</span>
-              <span className="tracking-tight">
-                {movie.vote_average?.toFixed(1) ?? "N/A"}
-              </span>
+          <div className="flex items-center gap-2 mt-2 text-[15px] text-gray-700 dark:text-gray-300">
+            <span className="text-amber-400 text-base">★</span>
+            <span>{movie.vote_average?.toFixed(1) ?? "N/A"}</span>
+          </div>
+
+          <div className="mt-7">
+            <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
+              Genres
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              {movie.genres?.map((g: any) => (
+                <GenreBadge key={g.id} name={g.name} />
+              ))}
             </div>
           </div>
 
-          <div className="mb-8 flex flex-wrap gap-2">
-            {movie.genres?.map((g: any) => (
-              <GenreBadge key={g.id} name={g.name} />
-            ))}
-          </div>
+          <div className="mt-9 max-w-2xl">
+            <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
+              Overview
+            </p>
 
-          <div className="max-w-2xl">
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-[15px]">
               {movie.overview}
             </p>
           </div>
-
         </div>
+
       </div>
     </main>
   )
