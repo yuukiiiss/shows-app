@@ -18,7 +18,7 @@ export default function Error({
       <div className="max-w-md w-full text-center">
         <div className="text-6xl mb-6">🎬</div>
 
-        <h1 className="text-2xl font-semibold mb-3">Unable to load movies</h1>
+        <h1 className="text-2xl font-semibold mb-3">Unable to load shows</h1>
 
         <p className="text-gray-500 mb-8 leading-relaxed">
           Please check your internet connection or try again in a moment.

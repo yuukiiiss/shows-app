@@ -44,8 +44,8 @@ export async function generateMetadata({
 
     if (!media) {
       return {
-        title: "Media detail",
-        description: "Media detail page",
+        title: "Show details",
+        description: "View show information",
       }
     }
 
@@ -53,12 +53,12 @@ export async function generateMetadata({
 
     return {
       title,
-      description: media.overview || "Media detail page",
+      description: media.overview || "View show information",
     }
   } catch {
     return {
-      title: "Media detail",
-      description: "Media detail page",
+      title: "Show details",
+      description: "View show information",
     }
   }
 }
@@ -168,7 +168,7 @@ export default async function MediaDetailPage({
           {media.genres && media.genres.length > 0 && (
             <div className="mt-6 md:mt-7">
               <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
-                Genres
+                Genre
               </p>
 
               <div className="flex flex-wrap gap-2">
@@ -182,7 +182,7 @@ export default async function MediaDetailPage({
           {media.overview && (
             <div className="mt-7 md:mt-9 max-w-2xl">
               <p className="text-xs uppercase tracking-wide text-gray-400 mb-2">
-                Overview
+                Story
               </p>
 
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm md:text-[15px]">

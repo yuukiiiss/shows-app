@@ -49,7 +49,7 @@ export default function MovieFilter() {
         focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700
         transition
       "
-      placeholder="Search movie..."
+      placeholder="Search movie and TV shows..."
       value={value}
       onChange={(e) => setValue(e.target.value)}
     />

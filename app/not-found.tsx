@@ -8,18 +8,18 @@ export default function NotFound() {
         <div className="text-6xl mb-6">🍿</div>
 
         <h1 className="text-2xl font-semibold mb-3">
-          Movie not found
+          We couldn’t find this show
         </h1>
 
         <p className="text-gray-500 mb-8 leading-relaxed">
-          The movie you’re looking for doesn’t exist or may have been removed.
+          The show you’re looking for may not exist or is no longer available.
         </p>
 
         <Link
           href="/movies"
           className="inline-block px-6 py-2.5 rounded-lg border border-gray-300 hover:bg-gray-100 transition font-medium"
         >
-          Browse movies
+          Explore shows
         </Link>
 
       </div>

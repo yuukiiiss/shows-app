@@ -3,47 +3,47 @@ import {
   getGenres,
   getTrendingMedia,
   searchMedia,
-} from "@/lib/tmdb"
-import MovieCard from "@/components/MovieCard"
-import MovieFilter from "@/components/MovieFilter"
-import GenreFilter from "@/components/GenreFilter"
-import FilterBar from "@/components/FilterBar"
-import Link from "next/link"
-import type { Metadata } from "next"
+} from "@/lib/tmdb";
+import MovieCard from "@/components/MovieCard";
+import MovieFilter from "@/components/MovieFilter";
+import GenreFilter from "@/components/GenreFilter";
+import FilterBar from "@/components/FilterBar";
+import Link from "next/link";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "All Movies",
-  description: "Browse and search movies",
-}
+  title: "Browse Shows",
+  description: "Browse movies and TV shows",
+};
 
 export default async function MoviesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; genre?: string }>
+  searchParams: Promise<{ q?: string; genre?: string }>;
 }) {
-  const { q, genre } = await searchParams
+  const { q, genre } = await searchParams;
 
-  let movies: any[] = []
+  let movies: any[] = [];
 
   if (q) {
-    movies = await searchMedia(q)
+    movies = await searchMedia(q);
   } else if (genre) {
-    movies = await discoverMovies(genre)
+    movies = await discoverMovies(genre);
   } else {
-    movies = await getTrendingMedia()
+    movies = await getTrendingMedia();
   }
 
-  const genres = await getGenres()
-  const selectedGenre = genres.find((g) => String(g.id) === genre)
+  const genres = await getGenres();
+  const selectedGenre = genres.find((g) => String(g.id) === genre);
 
   return (
     <main className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-10">
       <div className="mb-6">
         {!q && !genre && (
           <>
-            <h1 className="text-4xl font-semibold">Browse Movies</h1>
+            <h1 className="text-4xl font-semibold">Browse Shows</h1>
             <p className="text-gray-500 mt-1">
-              Discover trending and popular films to watch.
+              Discover trending movies and series to watch.
             </p>
           </>
         )}
@@ -65,7 +65,7 @@ export default async function MoviesPage({
               >
                 <path d="M15 18l-6-6 6-6" />
               </svg>
-              Back to all movies
+              Back to all shows
             </Link>
 
             <h1 className="text-4xl font-semibold mt-3">
@@ -73,7 +73,7 @@ export default async function MoviesPage({
             </h1>
 
             <p className="text-gray-500 mt-1">
-              Showing movies matching your search.
+              Showing results matching your search.
             </p>
           </>
         )}
@@ -95,16 +95,14 @@ export default async function MoviesPage({
               >
                 <path d="M15 18l-6-6 6-6" />
               </svg>
-              Back to all movies
+              Back to all shows
             </Link>
 
             <h1 className="text-4xl font-semibold mt-3">
               Genre: {selectedGenre?.name}
             </h1>
 
-            <p className="text-gray-500 mt-1">
-              Browse movies in this category.
-            </p>
+            <p className="text-gray-500 mt-1">Browse shows in this category.</p>
           </>
         )}
       </div>
@@ -143,9 +141,7 @@ export default async function MoviesPage({
         <div className="mt-24 flex flex-col items-center text-center max-w-md mx-auto">
           <div className="text-6xl mb-6">🍿</div>
 
-          <h2 className="text-xl font-semibold mb-2">
-            No results found
-          </h2>
+          <h2 className="text-xl font-semibold mb-2">No results found</h2>
 
           <p className="text-gray-500 leading-relaxed mb-6">
             Try searching with a different keyword or explore another genre.
@@ -155,7 +151,7 @@ export default async function MoviesPage({
             href="/movies"
             className="px-6 py-2.5 rounded-lg border border-gray-300 hover:bg-gray-100 transition font-medium"
           >
-            Browse all movies
+            Browse all shows
           </Link>
         </div>
       ) : (
@@ -166,5 +162,5 @@ export default async function MoviesPage({
         </div>
       )}
     </main>
-  )
+  );
 }
