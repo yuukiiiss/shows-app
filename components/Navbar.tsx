@@ -1,40 +1,70 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import ThemeToggle from "./ThemeToggle"
-import { useState } from "react"
 
 export default function Navbar() {
-  const [theme, setTheme] = useState<"light" | "dark">("light")
+  const pathname = usePathname()
+
+  function isActive(path: string) {
+    if (path === "/") return pathname === "/"
+    if (path === "/movies") return pathname.startsWith("/movies")
+    if (path === "/favorites") return pathname === "/favorites"
+    return false
+  }
+
+  function navClass(path: string) {
+    return `
+      relative pb-1 transition
+      ${
+        isActive(path)
+          ? "text-black dark:text-white"
+          : "text-gray-500 hover:text-black dark:hover:text-white"
+      }
+    `
+  }
 
   return (
     <header className="border-b border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/70 backdrop-blur sticky top-0 z-50">
-      <nav className="max-w-screen-2xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+      <nav className="max-w-screen-2xl mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
 
-        <div className="flex items-center gap-8">
-          <Link href="/" className="text-xl font-semibold tracking-tight">
+        <div className="flex items-center gap-10">
+          <Link
+            href="/"
+            className="text-xl font-semibold tracking-tight hover:opacity-80 transition"
+          >
             MovieApp
           </Link>
 
-          <div className="hidden md:flex items-center gap-6 text-sm">
-            <Link href="/" className="hover:text-gray-500 dark:hover:text-gray-300 transition">
-              Home
+          <div className="hidden md:flex items-center gap-7 text-sm">
+
+            <Link href="/" className={navClass("/")}>
+              Discover
+              {isActive("/") && (
+                <span className="absolute left-0 -bottom-0.5 w-full h-[2px] bg-black dark:bg-white rounded-full" />
+              )}
             </Link>
-            <Link href="/movies" className="hover:text-gray-500 dark:hover:text-gray-300 transition">
-              Movies
+
+            <Link href="/movies" className={navClass("/movies")}>
+              Browse
+              {isActive("/movies") && (
+                <span className="absolute left-0 -bottom-0.5 w-full h-[2px] bg-black dark:bg-white rounded-full" />
+              )}
             </Link>
-            <Link href="/favorites" className="hover:text-gray-500 dark:hover:text-gray-300 transition">
+
+            <Link href="/favorites" className={navClass("/favorites")}>
               Favorites
+              {isActive("/favorites") && (
+                <span className="absolute left-0 -bottom-0.5 w-full h-[2px] bg-black dark:bg-white rounded-full" />
+              )}
             </Link>
+
           </div>
         </div>
 
-        <div className="flex items-center gap-3 text-sm">
-          <span className="text-gray-500 dark:text-gray-400">
-            {theme === "dark" ? "Dark mode" : "Light mode"}
-          </span>
-
-          <ThemeToggle onThemeChange={setTheme} />
+        <div className="flex items-center gap-3">
+          <ThemeToggle />
         </div>
 
       </nav>
