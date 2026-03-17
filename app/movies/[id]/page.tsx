@@ -20,7 +20,7 @@ type MediaDetail = {
   poster_path?: string | null
   backdrop_path?: string | null
   runtime?: number
-  episode_run_time?: number[]
+  number_of_seasons?: number
   release_date?: string
   first_air_date?: string
   genres?: Genre[]
@@ -63,18 +63,11 @@ export async function generateMetadata({
   }
 }
 
-function formatRuntime(movie?: number, tv?: number[]) {
-  if (movie) {
-    const h = Math.floor(movie / 60)
-    const m = movie % 60
-    return `${h}h ${m}m`
-  }
-
-  if (tv && tv.length > 0) {
-    return `${tv[0]}m / ep`
-  }
-
-  return null
+function formatDuration(min?: number) {
+  if (!min) return null
+  const h = Math.floor(min / 60)
+  const m = min % 60
+  return `${h}h ${m}m`
 }
 
 function formatYear(date?: string) {
@@ -106,10 +99,16 @@ export default async function MediaDetailPage({
     media.release_date || media.first_air_date
   )
 
-  const runtime = formatRuntime(
-    media.runtime,
-    media.episode_run_time
-  )
+  const duration = formatDuration(media.runtime)
+
+  const typeLabel = type === "tv" ? "TV Series" : "Movie"
+
+  const seasonInfo =
+    type === "tv" && media.number_of_seasons
+      ? `${media.number_of_seasons} Season${
+          media.number_of_seasons > 1 ? "s" : ""
+        }`
+      : null
 
   return (
     <main className="pt-10 md:pt-14 pb-14 md:pb-16">
@@ -136,13 +135,30 @@ export default async function MediaDetailPage({
             {title}
           </h1>
 
-          {(year || runtime) && (
-            <div className="mt-1.5 text-sm md:text-[15px] text-gray-600 dark:text-gray-300 flex items-center gap-2">
-              {year && <span>{year}</span>}
-              {year && runtime && <span>•</span>}
-              {runtime && <span>{runtime}</span>}
-            </div>
-          )}
+          <div className="mt-1.5 text-sm md:text-[15px] text-gray-600 dark:text-gray-300 flex items-center gap-2 flex-wrap">
+            <span>{typeLabel}</span>
+
+            {year && (
+              <>
+                <span>•</span>
+                <span>{year}</span>
+              </>
+            )}
+
+            {type === "movie" && duration && (
+              <>
+                <span>•</span>
+                <span>{duration}</span>
+              </>
+            )}
+
+            {type === "tv" && seasonInfo && (
+              <>
+                <span>•</span>
+                <span>{seasonInfo}</span>
+              </>
+            )}
+          </div>
 
           <div className="flex items-center gap-2 mt-2 text-sm md:text-[15px] text-gray-700 dark:text-gray-300">
             <span className="text-amber-400 text-base">★</span>
