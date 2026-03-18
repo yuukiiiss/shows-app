@@ -34,7 +34,7 @@ export default function Navbar() {
             href="/"
             className="text-xl font-semibold tracking-tight hover:opacity-80 transition"
           >
-            MovieApp
+            ShowsApp
           </Link>
 
           <div className="hidden md:flex items-center gap-7 text-sm">
