@@ -11,10 +11,11 @@ import FilterBar from "@/components/FilterBar"
 import Link from "next/link"
 import type { Metadata } from "next"
 
+/* ---------- types ---------- */
+
 type Media = {
   id: number
   title: string
-  date?: string
   poster_path?: string | null
   vote_average?: number
   media_type: "movie" | "tv"
@@ -25,10 +26,14 @@ type Genre = {
   name: string
 }
 
+/* ---------- metadata ---------- */
+
 export const metadata: Metadata = {
   title: "Browse Shows",
   description: "Browse movies and TV shows",
 }
+
+/* ---------- page ---------- */
 
 export default async function MoviesPage({
   searchParams,
@@ -55,13 +60,10 @@ export default async function MoviesPage({
 
   return (
     <main className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-10">
-
       <div className="mb-6">
         {!q && !genre && (
           <>
-            <h1 className="text-4xl font-semibold">
-              Browse Shows
-            </h1>
+            <h1 className="text-4xl font-semibold">Browse Shows</h1>
             <p className="text-gray-500 mt-1">
               Discover trending movies and series to watch.
             </p>
@@ -89,8 +91,7 @@ export default async function MoviesPage({
             </Link>
 
             <h1 className="text-4xl font-semibold mt-3">
-              Results for{" "}
-              <span className="font-medium">“{q}”</span>
+              Results for <span className="font-medium">“{q}”</span>
             </h1>
 
             <p className="text-gray-500 mt-1">
@@ -189,7 +190,6 @@ export default async function MoviesPage({
           ))}
         </div>
       )}
-
     </main>
   )
 }

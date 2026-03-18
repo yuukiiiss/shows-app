@@ -54,20 +54,17 @@ export async function generateMetadata({
 
     return {
       title: title || fallback.title,
-      description:
-        media.overview || fallback.description,
-
+      description: media.overview || fallback.description,
       openGraph: poster
         ? {
             title,
-            description:
-              media.overview || fallback.description,
+            description: media.overview || fallback.description,
             images: [
               {
                 url: `https://image.tmdb.org/t/p/w500${poster}`,
                 width: 500,
                 height: 750,
-                alt: title,
+                alt: title || "Show image",
               },
             ],
           }
@@ -107,7 +104,10 @@ export default async function MediaDetailPage({
 
   if (!media) notFound()
 
+  // ⭐ GUARANTEE TITLE EXIST
   const title = media.title || media.name
+  if (!title) notFound()
+
   const imagePath = media.poster_path || media.backdrop_path
 
   const year = formatYear(
@@ -133,7 +133,7 @@ export default async function MediaDetailPage({
           {imagePath && (
             <Image
               src={`https://image.tmdb.org/t/p/w500${imagePath}`}
-              alt={title || "Media image"}
+              alt={title}
               width={520}
               height={780}
               className="rounded-2xl w-full h-auto"
