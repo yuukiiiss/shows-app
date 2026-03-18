@@ -28,6 +28,10 @@ async function fetchFromTMDB(url: string) {
 
     clearTimeout(timeout)
 
+    if (res.status === 404) {
+      return null
+    }
+
     if (!res.ok) {
       throw new Error(`TMDB request failed: ${res.status}`)
     }
