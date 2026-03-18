@@ -8,16 +8,8 @@ export default function ThemeToggle() {
 
   useEffect(() => {
     setMounted(true)
-
-    const saved = localStorage.getItem("theme")
-
-    if (saved === "dark") {
-      document.documentElement.classList.add("dark")
-      setDark(true)
-    } else {
-      document.documentElement.classList.remove("dark")
-      setDark(false)
-    }
+    const isDark = document.documentElement.classList.contains("dark")
+    setDark(isDark)
   }, [])
 
   function toggleTheme() {
@@ -40,7 +32,7 @@ export default function ThemeToggle() {
       title="Switch theme"
       className={`
         relative w-12 h-6 rounded-full transition-colors duration-300
-        ${dark ? "bg-gray-700" : "bg-gray-200"}
+        ${dark ? "bg-[#333333]" : "bg-gray-200"}
       `}
     >
       <span
@@ -49,7 +41,7 @@ export default function ThemeToggle() {
           flex items-center justify-center
           shadow-sm transition-all duration-300
           ${dark
-            ? "translate-x-6 bg-gray-900 text-indigo-300"
+            ? "translate-x-6 bg-[#262626] text-gray-300"
             : "bg-white"}
         `}
       >
