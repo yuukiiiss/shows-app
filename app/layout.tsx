@@ -28,15 +28,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black dark:bg-gray-900 dark:text-white`}
+        className={`
+          ${geistSans.variable}
+          ${geistMono.variable}
+          antialiased
+        `}
       >
         <FavoriteProvider>
           <Navbar />
 
-          <div className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8">
+          <main className="max-w-screen-xl mx-auto px-4 md:px-6 lg:px-8">
             {children}
-          </div>
-  
+          </main>
         </FavoriteProvider>
       </body>
     </html>

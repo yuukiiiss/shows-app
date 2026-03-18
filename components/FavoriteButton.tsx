@@ -83,10 +83,12 @@ export default function FavoriteButton({ movie }: { movie: Movie }) {
           >
             <div
               className="
-                bg-white dark:bg-gray-900
+                bg-white
+                dark:bg-[#262626]
                 rounded-3xl
                 px-8 py-7
                 shadow-2xl
+                dark:shadow-[0_25px_60px_rgba(0,0,0,0.75)]
                 w-[360px]
                 text-center
                 animate-[fadeIn_.18s_ease]
@@ -100,11 +102,11 @@ export default function FavoriteButton({ movie }: { movie: Movie }) {
                 <path d="M12.1 21s-7.1-4.4-9.2-8.6C1.4 8.6 3.3 4 7.6 5.1c1.7.4 2.8 1.7 4.5 3.6 1.7-1.9 2.8-3.2 4.5-3.6C20.9 4 22.8 8.6 21.3 12.4 19.2 16.6 12.1 21 12.1 21z" />
               </svg>
 
-              <h3 className="font-semibold mb-2">
+              <h3 className="font-semibold mb-2 text-black dark:text-gray-100">
                 Remove from favorites?
               </h3>
 
-              <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
                 You can always add it again later.
               </p>
 
@@ -113,8 +115,10 @@ export default function FavoriteButton({ movie }: { movie: Movie }) {
                   onClick={close}
                   className="
                     px-4 py-2 rounded-lg text-sm
-                    bg-gray-100 dark:bg-gray-800
-                    hover:bg-gray-200 dark:hover:bg-gray-700
+                    bg-gray-100
+                    dark:bg-[#2c2c2c]
+                    hover:bg-gray-200
+                    dark:hover:bg-[#343434]
                     transition
                   "
                 >

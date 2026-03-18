@@ -37,15 +37,27 @@ export default function MovieFilter() {
 
   return (
     <input
-      className="
-        w-full h-11 px-4 rounded-xl
-        border border-gray-200 dark:border-gray-800
-        bg-gray-50 dark:bg-gray-900/60
-        text-sm
-        focus:outline-none
-        focus:ring-2 focus:ring-gray-400/40 dark:focus:ring-gray-600/40
-        transition
-      "
+    className="
+      w-full h-11 px-4 rounded-xl
+      backdrop-blur-xl
+      bg-white/80
+      text-gray-900
+      border border-black/5
+    
+      dark:bg-[#262626]/70
+      dark:text-gray-100
+      dark:border-white/10
+    
+      text-sm
+      placeholder:text-gray-400 dark:placeholder:text-gray-500
+    
+      focus:outline-none
+      focus:ring-2
+      focus:ring-black/20
+      dark:focus:ring-white/20
+    
+      transition
+    "
       placeholder="Search movies or TV shows..."
       value={value}
       onChange={(e) => setValue(e.target.value)}

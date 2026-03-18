@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function GenreFilter({
   genres,
 }: {
-  genres: { id: number; name: string }[]
+  genres: { id: number; name: string }[];
 }) {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const selectedGenre = searchParams.get("genre") || ""
-  const query = searchParams.get("q") || ""
+  const selectedGenre = searchParams.get("genre") || "";
+  const query = searchParams.get("q") || "";
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    const genre = e.target.value
+    const genre = e.target.value;
 
-    const params = new URLSearchParams()
+    const params = new URLSearchParams();
 
-    if (query) params.set("q", query)
-    if (genre) params.set("genre", genre)
+    if (query) params.set("q", query);
+    if (genre) params.set("genre", genre);
 
-    router.push(`/movies?${params.toString()}`)
+    router.push(`/movies?${params.toString()}`);
   }
 
   return (
@@ -31,15 +31,25 @@ export default function GenreFilter({
         onChange={handleChange}
         className="
           w-full h-11 pl-4 pr-12 rounded-xl
-          border border-gray-200 dark:border-gray-800
-          bg-gray-50 dark:bg-gray-900/60
+          backdrop-blur-xl
+          bg-white/80
+          text-gray-900
+          border border-black/5 
+
+          dark:bg-[#262626]/70
+          dark:text-gray-100
+          dark:border-white/10
+
           text-sm appearance-none cursor-pointer
           transition
 
-          hover:bg-gray-100 dark:hover:bg-gray-800/60
+          hover:bg-white/90
+          dark:hover:bg-[#262626]/90
 
           focus:outline-none
-          focus:ring-2 focus:ring-gray-400/40 dark:focus:ring-gray-600/40
+          focus:ring-2
+          focus:ring-black/20
+          dark:focus:ring-white/20
         "
       >
         <option value="">All Genres</option>
@@ -66,5 +76,5 @@ export default function GenreFilter({
         </svg>
       </div>
     </div>
-  )
+  );
 }

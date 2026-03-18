@@ -4,13 +4,19 @@ import { useEffect, useState } from "react"
 
 export default function ThemeToggle() {
   const [dark, setDark] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
+
     const saved = localStorage.getItem("theme")
 
     if (saved === "dark") {
       document.documentElement.classList.add("dark")
       setDark(true)
+    } else {
+      document.documentElement.classList.remove("dark")
+      setDark(false)
     }
   }, [])
 
@@ -26,13 +32,15 @@ export default function ThemeToggle() {
     }
   }
 
+  if (!mounted) return null
+
   return (
     <button
       onClick={toggleTheme}
       title="Switch theme"
       className={`
         relative w-12 h-6 rounded-full transition-colors duration-300
-        ${dark ? "bg-gray-700" : "bg-gray-100"}
+        ${dark ? "bg-gray-700" : "bg-gray-200"}
       `}
     >
       <span
@@ -45,29 +53,7 @@ export default function ThemeToggle() {
             : "bg-white"}
         `}
       >
-        {dark ? (
-          "🌙"
-        ) : (
-          <svg
-            viewBox="0 0 24 24"
-            className="w-3.5 h-3.5 text-amber-500"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <circle cx="12" cy="12" r="4" fill="currentColor" />
-            <path d="M12 2v2" />
-            <path d="M12 20v2" />
-            <path d="M4.93 4.93l1.41 1.41" />
-            <path d="M17.66 17.66l1.41 1.41" />
-            <path d="M2 12h2" />
-            <path d="M20 12h2" />
-            <path d="M4.93 19.07l1.41-1.41" />
-            <path d="M17.66 6.34l1.41-1.41" />
-          </svg>
-        )}
+        {dark ? "🌙" : "☀️"}
       </span>
     </button>
   )
