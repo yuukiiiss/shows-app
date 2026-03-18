@@ -39,7 +39,7 @@ export default function FilterBar({
   return (
     <div
       className={`
-        ${isSticky ? "sticky top-20 z-20" : ""}
+        ${isSticky ? "sticky top-20 z-20 py-1" : ""}
         transition-all duration-300 ease-out
         ${visible ? "translate-y-0 opacity-100" : "-translate-y-20 opacity-0"}
       `}
