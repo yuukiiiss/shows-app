@@ -3,45 +3,65 @@ import {
   getGenres,
   getTrendingMedia,
   searchMedia,
-} from "@/lib/tmdb";
-import MovieCard from "@/components/MovieCard";
-import MovieFilter from "@/components/MovieFilter";
-import GenreFilter from "@/components/GenreFilter";
-import FilterBar from "@/components/FilterBar";
-import Link from "next/link";
-import type { Metadata } from "next";
+} from "@/lib/tmdb"
+import MovieCard from "@/components/MovieCard"
+import MovieFilter from "@/components/MovieFilter"
+import GenreFilter from "@/components/GenreFilter"
+import FilterBar from "@/components/FilterBar"
+import Link from "next/link"
+import type { Metadata } from "next"
+
+type Media = {
+  id: number
+  title: string
+  date?: string
+  poster_path?: string | null
+  vote_average?: number
+  media_type: "movie" | "tv"
+}
+
+type Genre = {
+  id: number
+  name: string
+}
 
 export const metadata: Metadata = {
   title: "Browse Shows",
   description: "Browse movies and TV shows",
-};
+}
 
 export default async function MoviesPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; genre?: string }>;
+  searchParams: Promise<{ q?: string; genre?: string }>
 }) {
-  const { q, genre } = await searchParams;
+  const { q, genre } = await searchParams
 
-  let movies: any[] = [];
+  let movies: Media[] = []
 
   if (q) {
-    movies = await searchMedia(q);
+    movies = await searchMedia(q)
   } else if (genre) {
-    movies = await discoverMovies(genre);
+    movies = await discoverMovies(genre)
   } else {
-    movies = await getTrendingMedia();
+    movies = await getTrendingMedia()
   }
 
-  const genres = await getGenres();
-  const selectedGenre = genres.find((g) => String(g.id) === genre);
+  const genres: Genre[] = await getGenres()
+
+  const selectedGenre = genres.find(
+    (g) => String(g.id) === genre
+  )
 
   return (
     <main className="max-w-screen-2xl mx-auto px-6 lg:px-10 py-10">
+
       <div className="mb-6">
         {!q && !genre && (
           <>
-            <h1 className="text-4xl font-semibold">Browse Shows</h1>
+            <h1 className="text-4xl font-semibold">
+              Browse Shows
+            </h1>
             <p className="text-gray-500 mt-1">
               Discover trending movies and series to watch.
             </p>
@@ -69,7 +89,8 @@ export default async function MoviesPage({
             </Link>
 
             <h1 className="text-4xl font-semibold mt-3">
-              Results for <span className="font-medium">“{q}”</span>
+              Results for{" "}
+              <span className="font-medium">“{q}”</span>
             </h1>
 
             <p className="text-gray-500 mt-1">
@@ -102,7 +123,9 @@ export default async function MoviesPage({
               Genre: {selectedGenre?.name}
             </h1>
 
-            <p className="text-gray-500 mt-1">Browse shows in this category.</p>
+            <p className="text-gray-500 mt-1">
+              Browse shows in this category.
+            </p>
           </>
         )}
       </div>
@@ -141,7 +164,9 @@ export default async function MoviesPage({
         <div className="mt-24 flex flex-col items-center text-center max-w-md mx-auto">
           <div className="text-6xl mb-6">🍿</div>
 
-          <h2 className="text-xl font-semibold mb-2">No results found</h2>
+          <h2 className="text-xl font-semibold mb-2">
+            No results found
+          </h2>
 
           <p className="text-gray-500 leading-relaxed mb-6">
             Try searching with a different keyword or explore another genre.
@@ -156,11 +181,15 @@ export default async function MoviesPage({
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {movies.map((movie: any) => (
-            <MovieCard key={`${movie.media_type}-${movie.id}`} movie={movie} />
+          {movies.map((movie) => (
+            <MovieCard
+              key={`${movie.media_type}-${movie.id}`}
+              movie={movie}
+            />
           ))}
         </div>
       )}
+
     </main>
-  );
+  )
 }
