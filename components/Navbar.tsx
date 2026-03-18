@@ -36,16 +36,24 @@ export default function Navbar() {
         shadow-[0_1px_0_rgba(0,0,0,0.06)]
       "
     >
-      <nav className="max-w-screen-2xl mx-auto px-6 lg:px-10 h-[70px] flex items-center justify-between">
-
-        <div className="flex items-center gap-8">
+      <nav
+        className="
+          max-w-screen-2xl mx-auto
+          px-4 sm:px-6 lg:px-10
+          h-[60px] sm:h-[70px]
+          flex items-center justify-between
+        "
+      >
+        <div className="flex items-center gap-4 sm:gap-8 min-w-0">
 
           <Link
             href="/"
             className="
-              text-xl font-semibold tracking-tight
+              text-lg sm:text-xl
+              font-semibold tracking-tight
               text-[color:var(--foreground)]
               hover:opacity-80 transition
+              whitespace-nowrap
             "
           >
             ShowsApp
@@ -53,8 +61,11 @@ export default function Navbar() {
 
           <div
             className="
-              flex items-center gap-7
-              overflow-x-auto scrollbar-none
+              flex items-center
+              gap-4 sm:gap-7
+              overflow-x-auto
+              scrollbar-none
+              max-w-[55vw] sm:max-w-none
             "
           >
             <Link href="/" className={navClass("/")}>
@@ -71,7 +82,9 @@ export default function Navbar() {
           </div>
         </div>
 
-        <ThemeToggle />
+        <div className="flex-shrink-0">
+          <ThemeToggle />
+        </div>
 
       </nav>
     </header>
