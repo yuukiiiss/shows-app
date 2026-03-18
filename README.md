@@ -55,7 +55,6 @@ app/
 components/              # Reusable UI Components
 lib/                     # API integration logic
 context/                 # FavoriteContext logic
-tailwind.config.ts       # Tailwind theme & plugin configuration
 ```
 
 ## ⚙️ Setup & Installation
@@ -133,7 +132,7 @@ Follow these steps to deploy the application:
 
    ```bash
    TMDB_API_KEY=your_api_key_here
-````
+   ```
 **4️⃣ Deploy**
 
    Vercel will automatically build and deploy the application after the setup is complete.
