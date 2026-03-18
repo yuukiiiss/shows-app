@@ -16,7 +16,7 @@ export default function Navbar() {
 
   function navClass(path: string) {
     return `
-      relative pb-1 transition
+      relative pb-1 whitespace-nowrap transition
       ${
         isActive(path)
           ? "text-black dark:text-white"
@@ -29,7 +29,8 @@ export default function Navbar() {
     <header className="border-b border-gray-200 dark:border-gray-800 bg-white/70 dark:bg-gray-900/70 backdrop-blur sticky top-0 z-50">
       <nav className="max-w-screen-2xl mx-auto px-6 lg:px-10 h-[68px] flex items-center justify-between">
 
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-6">
+
           <Link
             href="/"
             className="text-xl font-semibold tracking-tight hover:opacity-80 transition"
@@ -37,7 +38,10 @@ export default function Navbar() {
             ShowsApp
           </Link>
 
-          <div className="hidden md:flex items-center gap-7 text-sm">
+          <div className="
+            flex items-center gap-6 text-sm
+            overflow-x-auto scrollbar-none
+          ">
 
             <Link href="/" className={navClass("/")}>
               Discover
@@ -63,9 +67,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <ThemeToggle />
-        </div>
+        <ThemeToggle />
 
       </nav>
     </header>
