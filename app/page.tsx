@@ -2,6 +2,8 @@ import { getTrendingMedia } from "@/lib/tmdb"
 import MovieCard from "@/components/MovieCard"
 import type { Metadata } from "next"
 
+export const dynamic = "force-dynamic"
+
 export const metadata: Metadata = {
   title: "Trending Shows",
   description: "Discover trending movies and TV shows this week",
