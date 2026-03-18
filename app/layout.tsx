@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "Movie App",
-  description: "Movie recommendation app using Next.js",
+  title: "Shows App",
+  description: "Browse movies and TV shows",
 }
 
 export default function RootLayout({

@@ -33,33 +33,48 @@ export async function generateMetadata({
   params: Promise<{ id: string }>
   searchParams: Promise<{ type?: string }>
 }): Promise<Metadata> {
+  const fallback = {
+    title: "Show details",
+    description: "View show information.",
+  }
+
   try {
     const { id } = await params
     const { type } = await searchParams
 
-    const media: MediaDetail =
+    const media =
       type === "tv"
         ? await getTVDetail(id)
         : await getMovieDetail(id)
 
-    if (!media) {
-      return {
-        title: "Show details",
-        description: "View show information",
-      }
-    }
+    if (!media) return fallback
 
     const title = media.title || media.name
+    const poster = media.poster_path
 
     return {
-      title,
-      description: media.overview || "View show information",
+      title: title || fallback.title,
+      description:
+        media.overview || fallback.description,
+
+      openGraph: poster
+        ? {
+            title,
+            description:
+              media.overview || fallback.description,
+            images: [
+              {
+                url: `https://image.tmdb.org/t/p/w500${poster}`,
+                width: 500,
+                height: 750,
+                alt: title,
+              },
+            ],
+          }
+        : undefined,
     }
   } catch {
-    return {
-      title: "Show details",
-      description: "View show information",
-    }
+    return fallback
   }
 }
 

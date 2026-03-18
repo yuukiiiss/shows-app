@@ -1,14 +1,14 @@
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Favorite Movies",
-  description: "Your saved favorite movies",
-}
+  title: "Your Favorites",
+  description: "View shows you have saved.",
+};
 
 export default function FavoritesLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return children
+  return children;
 }
