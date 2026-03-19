@@ -42,18 +42,20 @@ export default function Navbar() {
           px-4 sm:px-6 lg:px-10
           h-[60px] sm:h-[70px]
           flex items-center justify-between
+          gap-3
         "
       >
-        <div className="flex items-center gap-4 sm:gap-8 min-w-0">
+        <div className="flex items-center gap-3 sm:gap-8 flex-1 min-w-0">
 
           <Link
             href="/"
             className="
-              text-lg sm:text-xl
+              text-base sm:text-xl
               font-semibold tracking-tight
               text-[color:var(--foreground)]
               hover:opacity-80 transition
               whitespace-nowrap
+              flex-shrink-0
             "
           >
             ShowsApp
@@ -62,10 +64,10 @@ export default function Navbar() {
           <div
             className="
               flex items-center
-              gap-4 sm:gap-7
+              gap-3 sm:gap-7
               overflow-x-auto
               scrollbar-none
-              max-w-[55vw] sm:max-w-none
+              flex-1 min-w-0
             "
           >
             <Link href="/" className={navClass("/")}>
