@@ -23,20 +23,19 @@ export default function MovieCard({ movie }: { movie: Movie }) {
     <Link href={`/movies/${movie.id}?type=${type}`}>
       <div
         className="
-          group rounded-2xl
+          group h-full rounded-2xl
           transition-all duration-300 ease-out
           hover:-translate-y-1
         "
       >
         <div
           className="
-            rounded-2xl overflow-hidden flex flex-col
-            bg-white
-            dark:bg-[#262626]
+            h-full flex flex-col
+            rounded-2xl overflow-hidden
 
-            shadow-md
-            hover:shadow-xl
+            bg-white dark:bg-[#262626]
 
+            shadow-md hover:shadow-xl
             dark:shadow-[0_8px_25px_rgba(0,0,0,0.45)]
             dark:hover:shadow-[0_18px_45px_rgba(0,0,0,0.75)]
 
@@ -58,19 +57,28 @@ export default function MovieCard({ movie }: { movie: Movie }) {
             )}
           </div>
 
-          <div className="px-4 pt-3 pb-4 flex flex-col text-black dark:text-gray-100">
+          <div className="px-4 pt-3 pb-4 flex flex-col flex-grow text-black dark:text-gray-100">
+
             <div className="flex items-start justify-between gap-3">
-              <h2 className="font-semibold line-clamp-2 leading-tight">
+              <h2
+                className="
+                  font-semibold
+                  leading-tight
+                  line-clamp-2
+                  min-h-[40px]
+                "
+              >
                 {movie.title}
               </h2>
 
               <FavoriteButton movie={movie} />
             </div>
 
-            <div className="flex items-center gap-1 mt-1 text-sm text-gray-600 dark:text-gray-300">
+            <div className="mt-auto pt-2 flex items-center gap-1 text-sm text-gray-600 dark:text-gray-300">
               <span className="text-amber-400 text-sm">★</span>
               <span>{movie.vote_average?.toFixed(1) ?? "N/A"}</span>
             </div>
+
           </div>
         </div>
       </div>
