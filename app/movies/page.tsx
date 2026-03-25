@@ -11,8 +11,6 @@ import FilterBar from "@/components/FilterBar"
 import Link from "next/link"
 import type { Metadata } from "next"
 
-/* ---------- types ---------- */
-
 type Media = {
   id: number
   title: string
@@ -26,14 +24,10 @@ type Genre = {
   name: string
 }
 
-/* ---------- metadata ---------- */
-
 export const metadata: Metadata = {
   title: "Browse Shows",
   description: "Browse movies and TV shows",
 }
-
-/* ---------- page ---------- */
 
 export default async function MoviesPage({
   searchParams,
@@ -175,7 +169,15 @@ export default async function MoviesPage({
 
           <Link
             href="/movies"
-            className="px-6 py-2.5 rounded-lg border border-gray-300 hover:bg-gray-100 transition font-medium"
+            className="
+            px-6 py-2.5 rounded-lg font-medium transition
+            border border-gray-300 text-gray-900
+            hover:bg-gray-100
+
+            dark:border-[#3a3a3a]
+            dark:text-gray-100
+            dark:hover:bg-[#262626]
+          "
           >
             Browse all shows
           </Link>
