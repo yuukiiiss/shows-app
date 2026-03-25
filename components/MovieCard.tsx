@@ -12,15 +12,25 @@ type Movie = {
   media_type?: "movie" | "tv"
 }
 
-export default function MovieCard({ movie }: { movie: Movie }) {
+export default function MovieCard({
+  movie,
+  from,
+}: {
+  movie: Movie
+  from?: "discover" | "browse" | "favorites"
+}) {
   const imageUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : null
 
   const type = movie.media_type || "movie"
 
+  const href = `/movies/${movie.id}?type=${type}${
+    from ? `&from=${from}` : ""
+  }`
+
   return (
-    <Link href={`/movies/${movie.id}?type=${type}`}>
+    <Link href={href}>
       <div
         className="
           group h-full rounded-2xl

@@ -26,12 +26,13 @@ export default async function Home() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {media.map((item: any) => (
-          <MovieCard
-            key={`${item.media_type}-${item.id}`}
-            movie={item}
-          />
-        ))}
+      {media.map((item: any) => (
+        <MovieCard
+          key={`${item.media_type}-${item.id}`}
+          movie={item}
+          from="discover"
+        />
+      ))}
       </div>
 
     </main>

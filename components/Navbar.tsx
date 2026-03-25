@@ -1,16 +1,26 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import ThemeToggle from "./ThemeToggle"
 
 export default function Navbar() {
   const pathname = usePathname()
+  const search = useSearchParams()
+
+  const from = search.get("from")
 
   function isActive(path: string) {
+    if (pathname.startsWith("/movies/") && from) {
+      if (from === "discover") return path === "/"
+      if (from === "browse") return path === "/movies"
+      if (from === "favorites") return path === "/favorites"
+    }
+
     if (path === "/") return pathname === "/"
     if (path === "/movies") return pathname.startsWith("/movies")
     if (path === "/favorites") return pathname === "/favorites"
+
     return false
   }
 

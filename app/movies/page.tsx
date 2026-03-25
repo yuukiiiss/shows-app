@@ -188,7 +188,8 @@ export default async function MoviesPage({
             <MovieCard
               key={`${movie.media_type}-${movie.id}`}
               movie={movie}
-            />
+              from="browse"
+          />
           ))}
         </div>
       )}
