@@ -7,6 +7,9 @@ import { createPortal } from "react-dom"
 type Movie = {
   id: number
   title: string
+  poster_path?: string | null
+  vote_average?: number
+  media_type?: "movie" | "tv"
 }
 
 export default function FavoriteButton({ movie }: { movie: Movie }) {
