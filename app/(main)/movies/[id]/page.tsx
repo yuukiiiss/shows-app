@@ -1,11 +1,11 @@
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
-
 import { getMovieDetail, getTVDetail } from "@/lib/tmdb"
 import FavoriteButton from "@/components/FavoriteButton"
 import GenreBadge from "@/components/GenreBadge"
 
+export const dynamic = "force-dynamic"
 type Genre = {
   id: number
   name: string
@@ -104,7 +104,6 @@ export default async function MediaDetailPage({
 
   if (!media) notFound()
 
-  // ⭐ GUARANTEE TITLE EXIST
   const title = media.title || media.name
   if (!title) notFound()
 

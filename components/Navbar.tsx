@@ -11,19 +11,20 @@ export default function Navbar() {
   const from = search.get("from")
 
   function isActive(path: string) {
-    if (pathname.startsWith("/movies/") && from) {
+    if (pathname.startsWith("/movies/")) {
       if (from === "discover") return path === "/"
       if (from === "browse") return path === "/movies"
       if (from === "favorites") return path === "/favorites"
+  
+      return path === "/movies" 
     }
-
+  
     if (path === "/") return pathname === "/"
     if (path === "/movies") return pathname.startsWith("/movies")
     if (path === "/favorites") return pathname === "/favorites"
-
+  
     return false
   }
-
   function navClass(path: string) {
     return `
       relative whitespace-nowrap

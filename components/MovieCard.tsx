@@ -30,7 +30,7 @@ export default function MovieCard({
   }`
 
   return (
-    <Link href={href}>
+    <Link href={href} prefetch={false}>
       <div
         className="
           group h-full rounded-2xl
